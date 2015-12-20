@@ -1,6 +1,4 @@
 function xvm_chruby {
-  type chruby >/dev/null || return 1;
-
   local version
 
   if { read -r version < .ruby-version; } 2>/dev/null || [[ -n "$version" ]]; then
@@ -9,42 +7,41 @@ function xvm_chruby {
     if [ "$version" == "$XVM_CHRUBY" ]; then
       return 0
     fi
-    XVM_CHRUBY="$version"
+
+    type chruby >/dev/null || return 1;
 
     echo "xvm: calling chruby $version"
-    chruby "$version"
+    chruby "$version" && XVM_CHRUBY="$version"
   fi
 }
 
 function xvm_evm {
-  type evm >/dev/null || return 1;
-
   local version
 
   if { read -r version < .xvm-evm; } 2>/dev/null || [[ -n "$version" ]]; then
     if [ "$version" == "$XVM_EVM" ]; then
       return 0
     fi
-    XVM_EVM="$version"
+
+    type evm >/dev/null || return 1;
 
     echo "xvm: calling evm use $version"
-    evm use "$version"
+    evm use "$version" && XVM_EVM="$version"
   fi
 }
 
 function xvm_kiex {
-  type kiex >/dev/null || return 1;
-
   local version
 
   if { read -r version < .xvm-kiex; } 2>/dev/null || [[ -n "$version" ]]; then
     if [ "$version" == "$XVM_KIEX" ]; then
       return 0
     fi
-    XVM_KIEX="$version"
+
+    type kiex >/dev/null || return 1;
 
     echo "xvm: calling kiex use $version"
-    kiex use "$version"
+    kiex use "$version" && XVM_KIEX="$version"
   fi
 }
 
