@@ -49,5 +49,11 @@ function xvm_kiex {
 }
 
 function xvm {
-  xvm_chruby && xvm_evm && xvm_kiex
+  local failed
+
+  xvm_chruby || failed=true
+  # calling kiex only makes sense after evm was a success
+  xvm_evm && xvm_kiex || failed=true
+
+  [ -z $failed ]
 }
